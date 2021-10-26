@@ -6,7 +6,7 @@ pipeline {
    
      stage('install dependencies') {
        steps {
-         sh 'apt npm install'
+         sh 'npm install'
        }
      }
      stage('test'){  
