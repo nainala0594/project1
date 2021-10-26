@@ -1,12 +1,12 @@
 pipeline {
 
-   angent any
+   agent any
    
    stages{
    
      stage('install dependencies') {
        steps {
-         sh 'npm install'
+         sh 'apt npm install'
        }
      }
      stage('test'){  
@@ -19,5 +19,7 @@ pipeline {
        steps {
          sh 'echo "deploying.."'
        }
-   }    
-}   
+     }  
+  }
+}
+  
