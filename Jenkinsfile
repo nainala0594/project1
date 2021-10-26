@@ -1,6 +1,6 @@
 pipeline {
 
-   angent any
+   agent any
    
    stages{
    
@@ -20,5 +20,6 @@ pipeline {
          sh 'echo "deploying.."'
        }
      }  
-  }    
-}   
+  }
+}
+  
