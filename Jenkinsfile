@@ -1,25 +1,33 @@
-pipeline {
-
-   agent any
-   
-   stages{
-   
-     stage('install dependencies') {
-       steps {
-         sh 'npm install'
-       }
-     }
-     stage('test'){  
-       steps {
-         sh 'echo "testing application.."'
-       }
-     }
-     
-     stage("Deploy nodejs app") {
-       steps {
-         sh 'echo "deploying.."'
-       }
-     }  
-  }
+pipeline{
+    agent any
+    tools{
+        maven 'maven'
+    }
+    parameters{
+        choice(name: 'tasks', choices: ['clean', 'install', 'package'], description: 'slsect the build type')
+    }
+    stages{
+        stage('git'){
+            steps{
+                git 'https://github.com/nainala0594/project1.git'
+            }
+        }
+                
+        stage('build'){
+            steps{
+                sh 'mvn ${tasks}'
+            }
+            
+        }        
+        
+        stage('deploy'){
+            steps{
+                sshagent(['deployer_1']) {
+                   sh "scp -o StrictHostKeyChecking=no target/mahaLogin-1.0.war tomcat9@54.152.39.216:/opt/tomcat8/webapps"
+                }
+            }
+        }
+         
+    }
 }
   
